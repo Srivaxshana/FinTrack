@@ -10,7 +10,7 @@ import Categories from './pages/Categories';
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#0a1628', color: '#10b981', fontSize: 18 }}>Loading...</div>;
+  if (loading) return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: 'var(--page-bg)', color: 'var(--accent)', fontSize: 18 }}>Loading...</div>;
   return user ? <Layout>{children}</Layout> : <Navigate to="/login" />;
 };
 

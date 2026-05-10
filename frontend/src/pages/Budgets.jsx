@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import api from '../api/axios';
 
-const inputStyle = { background: '#0a1628', border: '1px solid #233554', borderRadius: 8, padding: '10px 14px', color: '#fff', fontSize: 14, width: '100%', boxSizing: 'border-box' };
-const labelStyle = { color: '#ccd6f6', fontSize: 13, fontWeight: 600, display: 'block', marginBottom: 6 };
+const inputStyle = { background: 'var(--input-bg)', border: '1px solid var(--input-border)', borderRadius: 8, padding: '10px 14px', color: 'var(--text-primary)', fontSize: 14, width: '100%', boxSizing: 'border-box' };
+const labelStyle = { color: 'var(--text-muted)', fontSize: 13, fontWeight: 600, display: 'block', marginBottom: 6 };
 
 export default function Budgets() {
   const [budgets, setBudgets]       = useState([]);
@@ -42,39 +42,39 @@ export default function Budgets() {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 28 }}>
         <div>
-          <h1 style={{ color: '#fff', fontSize: 28, fontWeight: 700, margin: 0 }}>Budgets</h1>
-          <p style={{ color: '#8892b0', margin: '4px 0 0' }}>Set limits and watch your spending stay on track.</p>
+          <h1 style={{ color: 'var(--text-primary)', fontSize: 28, fontWeight: 700, margin: 0 }}>Budgets</h1>
+          <p style={{ color: 'var(--text-secondary)', margin: '4px 0 0' }}>Set limits and watch your spending stay on track.</p>
         </div>
-        <button onClick={openAdd} style={{ background: '#10b981', border: 'none', borderRadius: 10, padding: '11px 20px', color: '#fff', fontWeight: 600, fontSize: 14, cursor: 'pointer' }}>+ Add Budget</button>
+        <button onClick={openAdd} style={{ background: 'var(--accent)', border: 'none', borderRadius: 10, padding: '11px 20px', color: 'var(--text-primary)', fontWeight: 600, fontSize: 14, cursor: 'pointer' }}>+ Add Budget</button>
       </div>
 
       {budgets.length === 0 ? (
-        <div style={{ background: '#112240', borderRadius: 14, padding: 40, textAlign: 'center', color: '#8892b0' }}>No budgets yet. Click "Add Budget" to get started.</div>
+        <div style={{ background: 'var(--card-bg)', borderRadius: 14, padding: 40, textAlign: 'center', color: 'var(--text-secondary)' }}>No budgets yet. Click "Add Budget" to get started.</div>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           {budgets.map(b => {
             const pct = b.percentage || 0;
             const over = pct >= 100;
             return (
-              <div key={b._id} style={{ background: '#112240', borderRadius: 14, padding: 24, position: 'relative' }}>
+              <div key={b._id} style={{ background: 'var(--card-bg)', borderRadius: 14, padding: 24, position: 'relative' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-                  <span style={{ color: '#fff', fontWeight: 600, fontSize: 16 }}>{b.category}</span>
+                  <span style={{ color: 'var(--text-primary)', fontWeight: 600, fontSize: 16 }}>{b.category}</span>
                   <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                    <span style={{ color: '#8892b0', fontSize: 13 }}>{b.period}</span>
-                    <button onClick={() => openEdit(b)} style={{ background: 'none', border: 'none', color: '#8892b0', cursor: 'pointer' }}>✏️</button>
-                    <button onClick={() => handleDelete(b._id)} style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer' }}>🗑️</button>
+                    <span style={{ color: 'var(--text-secondary)', fontSize: 13 }}>{b.period}</span>
+                    <button onClick={() => openEdit(b)} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer' }}>✏️</button>
+                    <button onClick={() => handleDelete(b._id)} style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer' }}>🗑️</button>
                   </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 10 }}>
-                  <span style={{ color: over ? '#ef4444' : '#fff', fontSize: 26, fontWeight: 700 }}>${(b.spent || 0).toFixed(2)}</span>
-                  <span style={{ color: '#8892b0', fontSize: 15 }}>/ ${b.amount.toFixed(2)}</span>
+                  <span style={{ color: over ? 'var(--danger)' : 'var(--text-primary)', fontSize: 26, fontWeight: 700 }}>${(b.spent || 0).toFixed(2)}</span>
+                  <span style={{ color: 'var(--text-secondary)', fontSize: 15 }}>/ ${b.amount.toFixed(2)}</span>
                 </div>
-                <div style={{ background: '#1e3a5f', borderRadius: 99, height: 8, overflow: 'hidden', marginBottom: 8 }}>
-                  <div style={{ width: `${Math.min(pct, 100)}%`, height: '100%', background: over ? '#ef4444' : '#10b981', borderRadius: 99, transition: 'width 0.3s' }} />
+                <div style={{ background: 'var(--border)', borderRadius: 99, height: 8, overflow: 'hidden', marginBottom: 8 }}>
+                  <div style={{ width: `${Math.min(pct, 100)}%`, height: '100%', background: over ? 'var(--danger)' : 'var(--accent)', borderRadius: 99, transition: 'width 0.3s' }} />
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: over ? '#ef4444' : '#8892b0', fontSize: 13, fontWeight: over ? 700 : 400 }}>{pct}% used</span>
-                  <span style={{ color: '#8892b0', fontSize: 13 }}>{over ? `Over by $${(b.spent - b.amount).toFixed(2)}` : `$${(b.amount - b.spent).toFixed(2)} left`}</span>
+                  <span style={{ color: over ? 'var(--danger)' : 'var(--text-secondary)', fontSize: 13, fontWeight: over ? 700 : 400 }}>{pct}% used</span>
+                  <span style={{ color: 'var(--text-secondary)', fontSize: 13 }}>{over ? `Over by $${(b.spent - b.amount).toFixed(2)}` : `$${(b.amount - b.spent).toFixed(2)} left`}</span>
                 </div>
               </div>
             );
@@ -84,8 +84,8 @@ export default function Budgets() {
 
       {modal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 200 }}>
-          <div style={{ background: '#112240', borderRadius: 16, padding: 32, width: 380 }}>
-            <h3 style={{ color: '#fff', margin: '0 0 24px', fontSize: 20 }}>{editing ? 'Edit Budget' : 'Add Budget'}</h3>
+          <div style={{ background: 'var(--card-bg)', borderRadius: 16, padding: 32, width: 380 }}>
+            <h3 style={{ color: 'var(--text-primary)', margin: '0 0 24px', fontSize: 20 }}>{editing ? 'Edit Budget' : 'Add Budget'}</h3>
             <form onSubmit={handleSubmit}>
               <div style={{ marginBottom: 14 }}>
                 <label style={labelStyle}>Category</label>
@@ -107,8 +107,8 @@ export default function Budgets() {
                 </select>
               </div>
               <div style={{ display: 'flex', gap: 12 }}>
-                <button type="button" onClick={() => setModal(false)} style={{ flex: 1, background: '#1e3a5f', border: 'none', borderRadius: 8, padding: 12, color: '#ccd6f6', cursor: 'pointer', fontWeight: 600 }}>Cancel</button>
-                <button type="submit" disabled={loading} style={{ flex: 1, background: '#10b981', border: 'none', borderRadius: 8, padding: 12, color: '#fff', cursor: 'pointer', fontWeight: 600 }}>{loading ? 'Saving...' : 'Save'}</button>
+                <button type="button" onClick={() => setModal(false)} style={{ flex: 1, background: 'var(--border)', border: 'none', borderRadius: 8, padding: 12, color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 600 }}>Cancel</button>
+                <button type="submit" disabled={loading} style={{ flex: 1, background: 'var(--accent)', border: 'none', borderRadius: 8, padding: 12, color: 'var(--text-primary)', cursor: 'pointer', fontWeight: 600 }}>{loading ? 'Saving...' : 'Save'}</button>
               </div>
             </form>
           </div>

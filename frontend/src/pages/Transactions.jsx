@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import api from '../api/axios';
 
-const inputStyle = { background: '#0a1628', border: '1px solid #233554', borderRadius: 8, padding: '10px 14px', color: '#fff', fontSize: 14, width: '100%', boxSizing: 'border-box' };
-const labelStyle = { color: '#ccd6f6', fontSize: 13, fontWeight: 600, display: 'block', marginBottom: 6 };
+const inputStyle = { background: 'var(--input-bg)', border: '1px solid var(--input-border)', borderRadius: 8, padding: '10px 14px', color: 'var(--text-primary)', fontSize: 14, width: '100%', boxSizing: 'border-box' };
+const labelStyle = { color: 'var(--text-muted)', fontSize: 13, fontWeight: 600, display: 'block', marginBottom: 6 };
 
 export default function Transactions() {
   const [transactions, setTransactions] = useState([]);
@@ -56,14 +56,14 @@ export default function Transactions() {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24 }}>
         <div>
-          <h1 style={{ color: '#fff', fontSize: 28, fontWeight: 700, margin: 0 }}>Transactions</h1>
-          <p style={{ color: '#8892b0', margin: '4px 0 0' }}>All your income and expenses in one place.</p>
+          <h1 style={{ color: 'var(--text-primary)', fontSize: 28, fontWeight: 700, margin: 0 }}>Transactions</h1>
+          <p style={{ color: 'var(--text-secondary)', margin: '4px 0 0' }}>All your income and expenses in one place.</p>
         </div>
-        <button onClick={openAdd} style={{ background: '#10b981', border: 'none', borderRadius: 10, padding: '11px 20px', color: '#fff', fontWeight: 600, fontSize: 14, cursor: 'pointer' }}>+ Add Transaction</button>
+        <button onClick={openAdd} style={{ background: 'var(--accent)', border: 'none', borderRadius: 10, padding: '11px 20px', color: 'var(--text-primary)', fontWeight: 600, fontSize: 14, cursor: 'pointer' }}>+ Add Transaction</button>
       </div>
 
       {/* Filters */}
-      <div style={{ background: '#112240', borderRadius: 14, padding: 20, marginBottom: 20 }}>
+      <div style={{ background: 'var(--card-bg)', borderRadius: 14, padding: 20, marginBottom: 20 }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 14 }}>
           {[['From','date','startDate'],['To','date','endDate']].map(([l,t,k]) => (
             <div key={k}>
@@ -90,30 +90,30 @@ export default function Transactions() {
       </div>
 
       {/* Table */}
-      <div style={{ background: '#112240', borderRadius: 14, overflow: 'hidden' }}>
+      <div style={{ background: 'var(--card-bg)', borderRadius: 14, overflow: 'hidden' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
-            <tr style={{ borderBottom: '1px solid #1e3a5f' }}>
+            <tr style={{ borderBottom: '1px solid var(--border)' }}>
               {['Title','Category','Type','Amount','Date','Actions'].map(h => (
-                <th key={h} style={{ textAlign: 'left', color: '#8892b0', fontSize: 13, fontWeight: 600, padding: '14px 20px' }}>{h}</th>
+                <th key={h} style={{ textAlign: 'left', color: 'var(--text-secondary)', fontSize: 13, fontWeight: 600, padding: '14px 20px' }}>{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {transactions.length === 0 ? (
-              <tr><td colSpan={6} style={{ color: '#8892b0', textAlign: 'center', padding: 40 }}>No transactions found.</td></tr>
+              <tr><td colSpan={6} style={{ color: 'var(--text-secondary)', textAlign: 'center', padding: 40 }}>No transactions found.</td></tr>
             ) : transactions.map(t => (
-              <tr key={t._id} style={{ borderBottom: '1px solid #1a2f4e' }}>
-                <td style={{ color: '#ccd6f6', padding: '14px 20px', fontWeight: 500 }}>{t.title}</td>
-                <td style={{ color: '#8892b0', padding: '0 20px' }}>{t.category}</td>
+              <tr key={t._id} style={{ borderBottom: '1px solid var(--border)' }}>
+                <td style={{ color: 'var(--text-muted)', padding: '14px 20px', fontWeight: 500 }}>{t.title}</td>
+                <td style={{ color: 'var(--text-secondary)', padding: '0 20px' }}>{t.category}</td>
                 <td style={{ padding: '0 20px' }}>
-                  <span style={{ background: t.type === 'income' ? 'rgba(16,185,129,0.15)' : 'rgba(239,68,68,0.15)', color: t.type === 'income' ? '#10b981' : '#ef4444', padding: '3px 10px', borderRadius: 20, fontSize: 12, fontWeight: 600 }}>{t.type}</span>
+                  <span style={{ background: t.type === 'income' ? 'rgba(16,185,129,0.15)' : 'rgba(239,68,68,0.15)', color: t.type === 'income' ? 'var(--accent)' : 'var(--danger)', padding: '3px 10px', borderRadius: 20, fontSize: 12, fontWeight: 600 }}>{t.type}</span>
                 </td>
-                <td style={{ color: t.type === 'income' ? '#10b981' : '#ef4444', fontWeight: 600, padding: '0 20px' }}>{t.type === 'income' ? '+' : '−'}${t.amount.toFixed(2)}</td>
-                <td style={{ color: '#8892b0', padding: '0 20px', fontSize: 13 }}>{new Date(t.date).toLocaleDateString()}</td>
+                <td style={{ color: t.type === 'income' ? 'var(--accent)' : 'var(--danger)', fontWeight: 600, padding: '0 20px' }}>{t.type === 'income' ? '+' : '−'}${t.amount.toFixed(2)}</td>
+                <td style={{ color: 'var(--text-secondary)', padding: '0 20px', fontSize: 13 }}>{new Date(t.date).toLocaleDateString()}</td>
                 <td style={{ padding: '0 20px' }}>
-                  <button onClick={() => openEdit(t)} style={{ background: 'none', border: 'none', color: '#8892b0', cursor: 'pointer', fontSize: 16, marginRight: 8 }}>✏️</button>
-                  <button onClick={() => handleDelete(t._id)} style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: 16 }}>🗑️</button>
+                  <button onClick={() => openEdit(t)} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', fontSize: 16, marginRight: 8 }}>✏️</button>
+                  <button onClick={() => handleDelete(t._id)} style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer', fontSize: 16 }}>🗑️</button>
                 </td>
               </tr>
             ))}
@@ -124,8 +124,8 @@ export default function Transactions() {
       {/* Modal */}
       {modal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 200 }}>
-          <div style={{ background: '#112240', borderRadius: 16, padding: 32, width: 420, boxShadow: '0 20px 60px rgba(0,0,0,0.5)' }}>
-            <h3 style={{ color: '#fff', margin: '0 0 24px', fontSize: 20 }}>{editing ? 'Edit Transaction' : 'Add Transaction'}</h3>
+          <div style={{ background: 'var(--card-bg)', borderRadius: 16, padding: 32, width: 420, boxShadow: '0 20px 60px rgba(0,0,0,0.08)' }}>
+            <h3 style={{ color: 'var(--text-primary)', margin: '0 0 24px', fontSize: 20 }}>{editing ? 'Edit Transaction' : 'Add Transaction'}</h3>
             <form onSubmit={handleSubmit}>
               <div style={{ marginBottom: 14 }}>
                 <label style={labelStyle}>Title</label>
@@ -162,8 +162,8 @@ export default function Transactions() {
                 <input value={form.note} onChange={e => setForm({ ...form, note: e.target.value })} style={inputStyle} placeholder="Any additional details..." />
               </div>
               <div style={{ display: 'flex', gap: 12 }}>
-                <button type="button" onClick={() => setModal(false)} style={{ flex: 1, background: '#1e3a5f', border: 'none', borderRadius: 8, padding: 12, color: '#ccd6f6', cursor: 'pointer', fontWeight: 600 }}>Cancel</button>
-                <button type="submit" disabled={loading} style={{ flex: 1, background: '#10b981', border: 'none', borderRadius: 8, padding: 12, color: '#fff', cursor: 'pointer', fontWeight: 600 }}>{loading ? 'Saving...' : 'Save'}</button>
+                <button type="button" onClick={() => setModal(false)} style={{ flex: 1, background: 'var(--border)', border: 'none', borderRadius: 8, padding: 12, color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 600 }}>Cancel</button>
+                <button type="submit" disabled={loading} style={{ flex: 1, background: 'var(--accent)', border: 'none', borderRadius: 8, padding: 12, color: 'var(--text-primary)', cursor: 'pointer', fontWeight: 600 }}>{loading ? 'Saving...' : 'Save'}</button>
               </div>
             </form>
           </div>

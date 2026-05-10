@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import api from '../api/axios';
 
-const inputStyle = { background: '#0a1628', border: '1px solid #233554', borderRadius: 8, padding: '10px 14px', color: '#fff', fontSize: 14, width: '100%', boxSizing: 'border-box' };
-const labelStyle = { color: '#ccd6f6', fontSize: 13, fontWeight: 600, display: 'block', marginBottom: 6 };
+const inputStyle = { background: 'var(--input-bg)', border: '1px solid var(--input-border)', borderRadius: 8, padding: '10px 14px', color: 'var(--text-primary)', fontSize: 14, width: '100%', boxSizing: 'border-box' };
+const labelStyle = { color: 'var(--text-muted)', fontSize: 13, fontWeight: 600, display: 'block', marginBottom: 6 };
 
 export default function Categories() {
   const [categories, setCategories] = useState([]);
@@ -36,15 +36,15 @@ export default function Categories() {
   const expense = categories.filter(c => c.type === 'expense');
 
   const Section = ({ title, items, color }) => (
-    <div style={{ background: '#112240', borderRadius: 14, padding: 24, marginBottom: 16 }}>
-      <h3 style={{ color: '#fff', margin: '0 0 20px', fontSize: 16 }}>{title}</h3>
+    <div style={{ background: 'var(--card-bg)', borderRadius: 14, padding: 24, marginBottom: 16 }}>
+      <h3 style={{ color: 'var(--text-primary)', margin: '0 0 20px', fontSize: 16 }}>{title}</h3>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
-        {items.length === 0 && <span style={{ color: '#8892b0', fontSize: 14 }}>No categories yet.</span>}
+        {items.length === 0 && <span style={{ color: 'var(--text-secondary)', fontSize: 14 }}>No categories yet.</span>}
         {items.map(c => (
-          <div key={c._id} style={{ display: 'flex', alignItems: 'center', gap: 8, background: `${color}15`, border: `1px solid ${color}40`, borderRadius: 99, padding: '7px 16px' }}>
+            <div key={c._id} style={{ display: 'flex', alignItems: 'center', gap: 8, background: `${color}15`, border: `1px solid ${color}40`, borderRadius: 99, padding: '7px 16px' }}>
             <span style={{ color, fontSize: 14, fontWeight: 500 }}>{c.name}</span>
-            <button onClick={() => openEdit(c)} style={{ background: 'none', border: 'none', color: '#8892b0', cursor: 'pointer', padding: 0, fontSize: 13 }}>✏️</button>
-            <button onClick={() => handleDelete(c._id)} style={{ background: 'none', border: 'none', color: color === '#10b981' ? '#8892b0' : '#ef4444', cursor: 'pointer', padding: 0, fontSize: 13 }}>🗑️</button>
+            <button onClick={() => openEdit(c)} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: 0, fontSize: 13 }}>✏️</button>
+            <button onClick={() => handleDelete(c._id)} style={{ background: 'none', border: 'none', color: color === '#10b981' ? 'var(--text-secondary)' : 'var(--danger)', cursor: 'pointer', padding: 0, fontSize: 13 }}>🗑️</button>
           </div>
         ))}
       </div>
@@ -55,10 +55,10 @@ export default function Categories() {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 28 }}>
         <div>
-          <h1 style={{ color: '#fff', fontSize: 28, fontWeight: 700, margin: 0 }}>Categories</h1>
-          <p style={{ color: '#8892b0', margin: '4px 0 0' }}>Organize your income and expenses.</p>
+          <h1 style={{ color: 'var(--text-primary)', fontSize: 28, fontWeight: 700, margin: 0 }}>Categories</h1>
+          <p style={{ color: 'var(--text-secondary)', margin: '4px 0 0' }}>Organize your income and expenses.</p>
         </div>
-        <button onClick={openAdd} style={{ background: '#10b981', border: 'none', borderRadius: 10, padding: '11px 20px', color: '#fff', fontWeight: 600, fontSize: 14, cursor: 'pointer' }}>+ Add Category</button>
+        <button onClick={openAdd} style={{ background: 'var(--accent)', border: 'none', borderRadius: 10, padding: '11px 20px', color: 'var(--text-primary)', fontWeight: 600, fontSize: 14, cursor: 'pointer' }}>+ Add Category</button>
       </div>
 
       <Section title="Income Categories"  items={income}  color="#10b981" />
@@ -66,8 +66,8 @@ export default function Categories() {
 
       {modal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 200 }}>
-          <div style={{ background: '#112240', borderRadius: 16, padding: 32, width: 360 }}>
-            <h3 style={{ color: '#fff', margin: '0 0 24px', fontSize: 20 }}>{editing ? 'Edit Category' : 'Add Category'}</h3>
+          <div style={{ background: 'var(--card-bg)', borderRadius: 16, padding: 32, width: 360 }}>
+            <h3 style={{ color: 'var(--text-primary)', margin: '0 0 24px', fontSize: 20 }}>{editing ? 'Edit Category' : 'Add Category'}</h3>
             <form onSubmit={handleSubmit}>
               <div style={{ marginBottom: 14 }}>
                 <label style={labelStyle}>Category Name</label>
@@ -81,8 +81,8 @@ export default function Categories() {
                 </select>
               </div>
               <div style={{ display: 'flex', gap: 12 }}>
-                <button type="button" onClick={() => setModal(false)} style={{ flex: 1, background: '#1e3a5f', border: 'none', borderRadius: 8, padding: 12, color: '#ccd6f6', cursor: 'pointer', fontWeight: 600 }}>Cancel</button>
-                <button type="submit" disabled={loading} style={{ flex: 1, background: '#10b981', border: 'none', borderRadius: 8, padding: 12, color: '#fff', cursor: 'pointer', fontWeight: 600 }}>{loading ? 'Saving...' : 'Save'}</button>
+                <button type="button" onClick={() => setModal(false)} style={{ flex: 1, background: 'var(--border)', border: 'none', borderRadius: 8, padding: 12, color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 600 }}>Cancel</button>
+                <button type="submit" disabled={loading} style={{ flex: 1, background: 'var(--accent)', border: 'none', borderRadius: 8, padding: 12, color: 'var(--text-primary)', cursor: 'pointer', fontWeight: 600 }}>{loading ? 'Saving...' : 'Save'}</button>
               </div>
             </form>
           </div>
