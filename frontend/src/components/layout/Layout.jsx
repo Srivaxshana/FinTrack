@@ -12,7 +12,7 @@ const navItems = [
 export default function Layout({ children }) {
   const { user, logout } = useAuth();
   const location = useLocation();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  // Sidebar is fixed; no toggle needed
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
 
   useEffect(() => {
@@ -85,8 +85,7 @@ export default function Layout({ children }) {
         width: 220, background: t.sidebarBg, borderRight: `1px solid ${t.border}`, flexShrink: 0,
         display: 'flex', flexDirection: 'column', padding: '24px 0',
         position: 'fixed', top: 0, left: 0, height: '100vh', zIndex: 100,
-        transform: sidebarOpen ? 'translateX(0)' : 'translateX(-100%)',
-        transition: 'transform 0.2s',
+        transform: 'translateX(0)'
       }}>
         <div style={{ padding: '0 20px 28px', borderBottom: `1px solid ${t.border}` }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -96,7 +95,7 @@ export default function Layout({ children }) {
         </div>
         <nav style={{ padding: '20px 12px', flex: 1 }}>
           {navItems.map(item => (
-            <Link key={item.path} to={item.path} onClick={() => setSidebarOpen(false)}
+            <Link key={item.path} to={item.path}
               style={{
                 display: 'flex', alignItems: 'center', gap: 12, padding: '11px 14px', borderRadius: 10,
                 color: location.pathname === item.path ? t.accent : t.textSecondary,
@@ -109,14 +108,12 @@ export default function Layout({ children }) {
         </nav>
       </aside>
 
-      {/* Overlay for mobile */}
-      {sidebarOpen && <div onClick={() => setSidebarOpen(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 99 }} />}
 
       {/* Main */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         {/* Topbar */}
         <header style={{ background: t.headerBg, borderBottom: `1px solid ${t.border}`, padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 50 }}>
-          <button onClick={() => setSidebarOpen(!sidebarOpen)} style={{ background: 'none', border: 'none', color: t.textMuted, fontSize: 22, cursor: 'pointer', padding: 4 }}>☰</button>
+          <div style={{ width: 28 }} />
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
             <div style={{ background: t.initialsBg, borderRadius: '50%', width: 36, height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center', color: t.textPrimary, fontWeight: 700, fontSize: 14 }}>{initials}</div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
